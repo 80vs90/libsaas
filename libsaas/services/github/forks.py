@@ -32,11 +32,17 @@ class Forks(resource.GitHubResource):
         raise base.MethodNotSupported()
 
     @base.apimethod
-    def create(self):
+    def create(self, organization=None):
         """
         Fork this repo.
+
+        :var organization: Specify the organization you would
+            like to fork to. If left as `None` repo will fork
+            to current user.
+        :vartype organization: str
         """
-        request = http.Request('POST', self.get_url())
+        params = base.get_params(('organization',), locals())
+        request = http.Request('POST', self.get_url(), params)
 
         return request, parsers.parse_json
 

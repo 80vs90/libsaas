@@ -424,6 +424,9 @@ class GithubTestCase(unittest.TestCase):
         self.service.repo('myuser', 'myrepo').forks().create()
         self.expect('POST', '/repos/myuser/myrepo/forks')
 
+        self.service.repo('myuser', 'myrepo').forks().create(organization='myorg')
+        self.expect('POST', '/repos/myuser/myrepo/forks', json.dumps({'organization': 'myorg'}))
+
     def test_users(self):
         self.service.user().get()
         self.expect('GET', '/user')
